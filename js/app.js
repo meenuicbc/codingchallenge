@@ -63,9 +63,20 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  const duplicate = allGames.some((game) => game.normalizedGameUrl === validation.values.normalizedGameUrl);
-  if (duplicate) {
+  const duplicateUrl = allGames.some((game) => game.normalizedGameUrl === validation.values.normalizedGameUrl);
+  if (duplicateUrl) {
     setMessage(formMessage, "That game link has already been submitted. Please choose a different game link.", "error");
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit Game";
+    return;
+  }
+
+  const duplicateByStudent = allGames.some((game) => 
+    game.studentName.toLowerCase() === validation.values.studentName.toLowerCase() && 
+    game.gameName.toLowerCase() === validation.values.gameName.toLowerCase()
+  );
+  if (duplicateByStudent) {
+    setMessage(formMessage, "You have already submitted a game with this name. Please choose a different game or name.", "error");
     submitButton.disabled = false;
     submitButton.textContent = "Submit Game";
     return;
