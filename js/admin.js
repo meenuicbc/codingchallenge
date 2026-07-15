@@ -2,7 +2,7 @@ import { listenToGamesAdmin, deleteGame } from "./firebase.js";
 import { escapeText, formatDate } from "./ui.js";
 
 // Admin credentials
-const ADMIN_USERNAME = "codingadmin";
+const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "vibe";
 
 // DOM Elements
@@ -55,14 +55,18 @@ function showDashboard() {
 loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const username = usernameInput.value.trim();
-  const password = passwordInput.value;
+  const password = passwordInput.value.trim();
+
+  console.log("Login attempt:", { username, password, expected: { ADMIN_USERNAME, ADMIN_PASSWORD } });
 
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    console.log("Login successful!");
     sessionStorage.setItem("admin-token", "authenticated");
     loginError.classList.remove("show");
     loginError.textContent = "";
     showDashboard();
   } else {
+    console.log("Login failed - credentials don't match");
     loginError.textContent = "Invalid username or password";
     loginError.classList.add("show");
     passwordInput.value = "";
