@@ -100,14 +100,34 @@ window.addEventListener('pageshow', (event) => {
 
 // Initialize dashboard only after authentication
 function initializeDashboard() {
+  // Show initial loading state
+  statsContainer.innerHTML = `
+    <div class="card stat-card"><span>Total Games</span><strong>Loading...</strong></div>
+    <div class="card stat-card"><span>Total Upvotes</span><strong>Loading...</strong></div>
+    <div class="card stat-card"><span>Current Top 3</span><strong>Loading...</strong></div>
+  `;
+  topGamesContainer.innerHTML = '<div class="empty-state">Loading top games...</div>';
+  listContainer.innerHTML = '<div class="empty-state">Loading all submissions...</div>';
+
   listenToGamesAdmin((games, error) => {
     loadingElement.hidden = true;
     if (error) {
-      listContainer.innerHTML = '<div class="empty-state">Unable to load the admin dashboard right now.</div>';
+      statsContainer.innerHTML = '<div class="card stat-card" style="grid-column: 1 / -1; color: red;">⚠️ Unable to load games. Check your Firestore configuration.</div>';
+      listContainer.innerHTML = '<div class="empty-state">Unable to load the admin dashboard right now. Please refresh the page.</div>';
       return;
     }
     allGames = games;
-    renderAdmin();
+    if (allGames.length === 0) {
+      statsContainer.innerHTML = `
+        <div class="card stat-card"><span>Total Games</span><strong>0</strong></div>
+        <div class="card stat-card"><span>Total Upvotes</span><strong>0</strong></div>
+        <div class="card stat-card"><span>Current Top 3</span><strong>No submissions yet</strong></div>
+      `;
+      topGamesContainer.innerHTML = '<div class="empty-state">No games submitted yet. Check back soon! 🎮</div>';
+      listContainer.innerHTML = '<div class="empty-state">No submissions yet. Students will see submissions here once they submit their games.</div>';
+    } else {
+      renderAdmin();
+    }
   });
 
   searchInput.addEventListener("input", renderAdmin);
