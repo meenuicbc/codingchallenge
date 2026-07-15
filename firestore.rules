@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /games/{gameId} {
+      allow read: if resource.data.status == 'approved' || request.auth != null;
+
+      allow create: if request.auth != null
+        && request.resource.data.studentName is string
+        && request.resource.data.studentName.size() >= 2
+        && request.resource.data.studentName.size() <= 40
+        && request.resource.data.gameName is string
+        && request.resource.data.gameName.size() >= 2
+        && request.resource.data.gameName.size() <= 60
+        && request.resource.data.description is string
+        && request.resource.data.description.size() >= 10
+        && request.resource.data.description.size() <= 300
+        && request.resource.data.gameUrl is string
+        && request.resource.data.gameUrl.size() <= 300
+        && request.resource.data.normalizedGameUrl is string
+        && request.resource.data.normalizedGameUrl.size() <= 300
+        && request.resource.data.voteCount is number
+        && request.resource.data.voteCount == 0
+        && request.resource.data.status == 'approved'
+        && request.resource.data.createdAt is timestamp;
+
+      allow update: if request.auth != null
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['voteCount'])
+        && request.resource.data.voteCount == resource.data.voteCount + 1;
+
+      allow delete: if false;
+
+      match /votes/{voteId} {
+        allow read: if true;
+        allow create: if request.auth != null
+          && request.resource.data.voterId is string
+          && request.resource.data.voterId == request.auth.uid
+          && request.resource.id == request.auth.uid
+          && request.resource.data.createdAt is timestamp;
+        allow update: if false;
+        allow delete: if false;
+      }
+    }
+  }
+}

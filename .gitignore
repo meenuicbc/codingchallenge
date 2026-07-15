@@ -1,0 +1,6 @@
+# Local editor and system files
+.DS_Store
+.vscode/
+
+# Optional local-only config if you want to keep extra values private
+js/firebase-config.local.js

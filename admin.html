@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Summer Vibe Coding Game Festival</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="hero hero--compact">
+      <div class="hero__content">
+        <p class="eyebrow">🛡️ Teacher Dashboard</p>
+        <h1>Admin View</h1>
+        <p class="hero__subtitle">
+          Review all submissions, vote totals, and the current leaders.
+        </p>
+        <div class="hero__actions">
+          <a class="button button--secondary" href="./index.html">Back to Festival</a>
+        </div>
+        <div class="hero__note" role="note">
+          This dashboard is read-only by default. Secure moderation should be handled through the Firebase Console.
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" aria-labelledby="admin-summary-title">
+        <div class="section__heading">
+          <h2 id="admin-summary-title">📊 Admin Summary</h2>
+          <p>Quick review of every submitted game.</p>
+        </div>
+        <div id="admin-stats" class="stats-grid"></div>
+      </section>
+
+      <section class="section" aria-labelledby="admin-top-title">
+        <div class="section__heading">
+          <h2 id="admin-top-title">🏆 Current Top 3 Winners</h2>
+        </div>
+        <div id="admin-top-games" class="top-games"></div>
+      </section>
+
+      <section class="section" aria-labelledby="admin-list-title">
+        <div class="section__heading section__heading--row">
+          <div>
+            <h2 id="admin-list-title">🗂️ All Submissions</h2>
+            <p>Review game details and vote counts.</p>
+          </div>
+          <div class="toolbar">
+            <label class="sr-only" for="admin-search">Search admin list</label>
+            <input id="admin-search" type="search" placeholder="Search by student or game" />
+            <label class="sr-only" for="admin-sort">Sort admin list</label>
+            <select id="admin-sort">
+              <option value="highest-votes">Highest Votes</option>
+              <option value="newest">Newest Games</option>
+            </select>
+          </div>
+        </div>
+        <div id="admin-loading" class="loading-state" role="status">Loading admin dashboard…</div>
+        <div id="admin-list" class="table-card"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./js/admin.js"></script>
+  </body>
+</html>

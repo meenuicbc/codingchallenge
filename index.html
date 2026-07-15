@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Summer Vibe Coding Game Festival - a cheerful student game showcase with voting and admin review." />
+    <title>Summer Vibe Coding Game Festival – Show Us What You've Built!</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">🌞 Summer Vibe Coding Game Festival</p>
+        <h1>Summer Vibe Coding Game Festival – Show Us What You've Built!</h1>
+        <p class="hero__subtitle">
+          Share your game, cheer for classmates, and celebrate creativity together.
+        </p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="#submit-game">Submit Your Game</a>
+          <a class="button button--secondary" href="#all-games">Explore Games</a>
+          <a class="button button--ghost" href="./admin.html">Admin View</a>
+        </div>
+        <div class="hero__note" role="note">
+          Please upvote games you enjoy. We do not downvote any game. Let’s support and encourage every creator!
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" aria-labelledby="top-games-title">
+        <div class="section__heading">
+          <h2 id="top-games-title">🏆 Top 3 Games</h2>
+          <p>These are the current fan favorites.</p>
+        </div>
+        <div id="top-games" class="top-games" aria-live="polite"></div>
+      </section>
+
+      <section class="section" id="submit-game" aria-labelledby="submit-title">
+        <div class="section__heading">
+          <h2 id="submit-title">🎮 Submit Your Game</h2>
+          <p>Share a public GitHub Pages game link so everyone can try it.</p>
+        </div>
+        <form id="game-form" class="card form-card" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="student-name">Student Name</label>
+              <input id="student-name" name="studentName" type="text" maxlength="40" required />
+            </div>
+            <div class="field">
+              <label for="game-name">Game Name</label>
+              <input id="game-name" name="gameName" type="text" maxlength="60" required />
+            </div>
+            <div class="field field--full">
+              <label for="game-link">Public GitHub Game Link</label>
+              <input id="game-link" name="gameUrl" type="url" required />
+            </div>
+            <div class="field field--full">
+              <label for="description">Short Description / How to Play</label>
+              <textarea id="description" name="description" rows="4" maxlength="300" required></textarea>
+            </div>
+          </div>
+          <div class="privacy-note">
+            Please use only your first name or classroom display name. Do not enter email addresses, phone numbers, or private information.
+          </div>
+          <div id="form-message" class="message" aria-live="polite"></div>
+          <button class="button button--primary" id="submit-button" type="submit">Submit Game</button>
+        </form>
+      </section>
+
+      <section class="section" id="all-games" aria-labelledby="games-title">
+        <div class="section__heading section__heading--row">
+          <div>
+            <h2 id="games-title">🌈 All Submitted Games</h2>
+            <p>Browse, open, and upvote the games you love.</p>
+          </div>
+          <div class="toolbar">
+            <label class="sr-only" for="search-games">Search games</label>
+            <input id="search-games" type="search" placeholder="Search by game or student" />
+            <label class="sr-only" for="sort-games">Sort games</label>
+            <select id="sort-games">
+              <option value="highest-votes">Highest Votes</option>
+              <option value="newest">Newest Games</option>
+            </select>
+          </div>
+        </div>
+        <div id="games-loading" class="loading-state" role="status">Loading games…</div>
+        <div id="games-empty" class="empty-state" hidden>No games yet. Be the first to share one!</div>
+        <div id="games-no-results" class="empty-state" hidden>No games match your search yet.</div>
+        <div id="vote-feedback" class="message" aria-live="polite"></div>
+        <div id="games-list" class="games-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
