@@ -104,10 +104,6 @@ form.addEventListener("submit", function(event) {
 searchInput.addEventListener("input", renderGames);
 sortSelect.addEventListener("change", renderGames);
 
-function getPublicDisplayName() {
-  return "Anonymous Creator";
-}
-
 function renderGames() {
   var searchTerm = searchInput.value.toLowerCase();
   var sortBy = sortSelect.value;
@@ -163,7 +159,6 @@ function renderTopGames() {
       return '<div class="card top-game">' +
         '<div class="top-game__badge">' + medals[index] + '</div>' +
         '<h3>' + escapeText(game.gameName) + '</h3>' +
-        '<p class="game-card__by"><strong>' + escapeText(getPublicDisplayName()) + '</strong></p>' +
         '<div class="top-game__votes">⬆️ ' + game.voteCount + ' upvotes</div>' +
       '</div>';
     }).join('');
