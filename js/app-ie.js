@@ -104,12 +104,16 @@ form.addEventListener("submit", function(event) {
 searchInput.addEventListener("input", renderGames);
 sortSelect.addEventListener("change", renderGames);
 
+function getPublicDisplayName() {
+  return "Anonymous Creator";
+}
+
 function renderGames() {
   var searchTerm = searchInput.value.toLowerCase();
   var sortBy = sortSelect.value;
 
   var filtered = allGames.filter(function(game) {
-    var searchText = (game.studentName + " " + game.gameName + " " + game.description).toLowerCase();
+    var searchText = (game.gameName + " " + game.description).toLowerCase();
     return searchText.includes(searchTerm);
   });
 
@@ -132,12 +136,12 @@ function renderGames() {
       return '<div class="card game-card">' +
         '<div class="game-card__content">' +
           '<h3>' + escapeText(game.gameName) + '</h3>' +
-          '<p class="game-card__by">by <strong>' + escapeText(game.studentName) + '</strong></p>' +
+          '<p class="game-card__by"><strong>' + escapeText(getPublicDisplayName()) + '</strong></p>' +
           '<p>' + escapeText(game.description) + '</p>' +
           '<div class="game-card__actions">' +
             '<button class="button button--small" onclick="playGame(\'' + escapeText(game.gameUrl).replace(/'/g, "\\'") + '\')" title="Play game in new window">🎮 Play Game</button>' +
             '<button class="button button--small ' + (isVoted ? 'button--voted' : '') + '" onclick="voteGame(\'' + game.id + '\')" title="Upvote game">' +
-              (isVoted ? '✓ Voted (' + game.voteCount + ')' : '⬆️ Vote (' + game.voteCount + ')') +
+              (isVoted ? '✓ Upvoted (' + game.voteCount + ')' : '⬆️ Upvote (' + game.voteCount + ')') +
             '</button>' +
           '</div>' +
         '</div>' +
@@ -160,8 +164,8 @@ function renderTopGames() {
       return '<div class="card top-game">' +
         '<div class="top-game__badge">' + medals[index] + '</div>' +
         '<h3>' + escapeText(game.gameName) + '</h3>' +
-        '<p class="game-card__by">by <strong>' + escapeText(game.studentName) + '</strong></p>' +
-        '<div class="top-game__votes">⬆️ ' + game.voteCount + ' votes</div>' +
+        '<p class="game-card__by"><strong>' + escapeText(getPublicDisplayName()) + '</strong></p>' +
+        '<div class="top-game__votes">⬆️ ' + game.voteCount + ' upvotes</div>' +
       '</div>';
     }).join('');
   }
@@ -173,20 +177,20 @@ function playGame(url) {
 
 function voteGame(gameId) {
   if (votedGameIds.has(gameId)) {
-    setMessage(voteFeedback, "You've already voted for this game!", "info");
+    setMessage(voteFeedback, "You've already upvoted this game!", "info");
     return;
   }
 
   voteForGame(gameId, currentUserId, function(error, result) {
     if (error) {
       console.error(error);
-      setMessage(voteFeedback, "Could not vote. Please try again.", "error");
+      setMessage(voteFeedback, "Could not upvote. Please try again.", "error");
       return;
     }
 
     votedGameIds.add(gameId);
     localStorage.setItem("summer-vibe-votes", JSON.stringify(Array.from(votedGameIds)));
-    setMessage(voteFeedback, "⬆️ Vote counted! Thanks for supporting this game!", "success");
+    setMessage(voteFeedback, "⬆️ Upvote counted! Thanks for supporting this game!", "success");
     setTimeout(function() {
       clearMessage(voteFeedback);
     }, 3000);

@@ -108,6 +108,10 @@ form.addEventListener("submit", async (event) => {
 searchInput.addEventListener("input", renderGames);
 sortSelect.addEventListener("change", renderGames);
 
+function getPublicDisplayName() {
+  return "Anonymous Creator";
+}
+
 function renderTopGames() {
   const topThree = [...allGames]
     .sort(compareGames)
@@ -125,8 +129,8 @@ function renderTopGames() {
     card.innerHTML = `
       <p class="top-card__place">${index + 1}${index === 0 ? "st" : index === 1 ? "nd" : "rd"} Place</p>
       <h3>${escapeText(game.gameName)}</h3>
-      <p><strong>Student:</strong> ${escapeText(game.studentName)}</p>
-      <p><strong>Votes:</strong> ${game.voteCount ?? 0}</p>
+      <p><strong>Submitted by:</strong> ${escapeText(getPublicDisplayName())}</p>
+      <p><strong>Upvotes:</strong> ${game.voteCount ?? 0}</p>
       <a class="button button--secondary" href="${escapeText(game.gameUrl)}" target="_blank" rel="noopener noreferrer">Play Game</a>
     `;
     topGamesContainer.appendChild(card);
@@ -137,7 +141,7 @@ function renderGames() {
   const query = searchInput.value.trim().toLowerCase();
   const sortMode = sortSelect.value;
   let filtered = [...allGames].filter((game) => {
-    const haystack = `${game.gameName} ${game.studentName}`.toLowerCase();
+    const haystack = `${game.gameName} ${game.description}`.toLowerCase();
     return haystack.includes(query);
   });
 
@@ -172,7 +176,7 @@ function renderGames() {
 
     card.innerHTML = `
       <h3>${escapeText(game.gameName)}</h3>
-      <div class="game-card__meta">By ${escapeText(game.studentName)} • ${formatDate(game.createdAt)}</div>
+      <div class="game-card__meta">${escapeText(getPublicDisplayName())} • ${formatDate(game.createdAt)}</div>
       <p class="game-card__description">${escapeText(game.description)}</p>
       <div class="game-card__footer">
         <a class="button button--secondary" href="${escapeText(game.gameUrl)}" target="_blank" rel="noopener noreferrer">Play Game</a>
@@ -203,7 +207,7 @@ async function handleVote(event) {
       localStorage.setItem("summer-vibe-votes", JSON.stringify([...votedGameIds]));
       setMessage(voteFeedback, "Thanks for upvoting! Your support helps every creator shine. ⭐", "success");
     } else {
-      setMessage(voteFeedback, "You already supported this game. Thanks for cheering it on!", "success");
+      setMessage(voteFeedback, "You already upvoted this game. Thanks for cheering it on!", "success");
     }
     renderGames();
     renderTopGames();

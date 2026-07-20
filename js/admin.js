@@ -166,7 +166,7 @@ function renderAdmin() {
         <p class="top-card__place">${index + 1}${index === 0 ? "st" : index === 1 ? "nd" : "rd"} Place</p>
         <h3>${escapeText(game.gameName)}</h3>
         <p><strong>Student:</strong> ${escapeText(game.studentName)}</p>
-        <p><strong>Votes:</strong> ${game.voteCount ?? 0}</p>
+        <p><strong>Upvotes:</strong> ${game.voteCount ?? 0}</p>
       `;
       topGamesContainer.appendChild(card);
     });
