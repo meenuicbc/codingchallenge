@@ -108,10 +108,6 @@ form.addEventListener("submit", async (event) => {
 searchInput.addEventListener("input", renderGames);
 sortSelect.addEventListener("change", renderGames);
 
-function getPublicDisplayName() {
-  return "Anonymous Creator";
-}
-
 function renderTopGames() {
   const topThree = [...allGames]
     .sort(compareGames)
@@ -129,7 +125,6 @@ function renderTopGames() {
     card.innerHTML = `
       <p class="top-card__place">${index + 1}${index === 0 ? "st" : index === 1 ? "nd" : "rd"} Place</p>
       <h3>${escapeText(game.gameName)}</h3>
-      <p><strong>Submitted by:</strong> ${escapeText(getPublicDisplayName())}</p>
       <p><strong>Upvotes:</strong> ${game.voteCount ?? 0}</p>
       <a class="button button--secondary" href="${escapeText(game.gameUrl)}" target="_blank" rel="noopener noreferrer">Play Game</a>
     `;
