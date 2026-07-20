@@ -176,7 +176,7 @@ function renderGames() {
 
     card.innerHTML = `
       <h3>${escapeText(game.gameName)}</h3>
-      <div class="game-card__meta">${escapeText(getPublicDisplayName())} • ${formatDate(game.createdAt)}</div>
+      <div class="game-card__meta">${formatDate(game.createdAt)}</div>
       <p class="game-card__description">${escapeText(game.description)}</p>
       <div class="game-card__footer">
         <a class="button button--secondary" href="${escapeText(game.gameUrl)}" target="_blank" rel="noopener noreferrer">Play Game</a>

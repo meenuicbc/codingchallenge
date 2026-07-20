@@ -136,7 +136,6 @@ function renderGames() {
       return '<div class="card game-card">' +
         '<div class="game-card__content">' +
           '<h3>' + escapeText(game.gameName) + '</h3>' +
-          '<p class="game-card__by"><strong>' + escapeText(getPublicDisplayName()) + '</strong></p>' +
           '<p>' + escapeText(game.description) + '</p>' +
           '<div class="game-card__actions">' +
             '<button class="button button--small" onclick="playGame(\'' + escapeText(game.gameUrl).replace(/'/g, "\\'") + '\')" title="Play game in new window">🎮 Play Game</button>' +
